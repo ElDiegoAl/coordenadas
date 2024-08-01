@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Coordenadas</title>
+    <style>
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversión de Coordenadas Polares y Rectangulares</h1>
+    <h2>De Polares a Rectangulares</h2>
+    <form id="polarToRectForm">
+        <label for="r">r:</label>
+        <input type="number" id="r" step="any" required>
+        <label for="theta">θ (radianes):</label>
+        <input type="number" id="theta" step="any" required>
+        <button type="submit">Convertir</button>
+    </form>
+    <div id="polarToRectResult" class="result"></div>
+
+    <h2>De Rectangulares a Polares</h2>
+    <form id="rectToPolarForm">
+        <label for="x">x:</label>
+        <input type="number" id="x" step="any" required>
+        <label for="y">y:</label>
+        <input type="number" id="y" step="any" required>
+        <button type="submit">Convertir</button>
+    </form>
+    <div id="rectToPolarResult" class="result"></div>
+
+    <script>
+        // Función para convertir coordenadas polares a rectangulares
+        function polarToRectangular(r, theta) {
+            let x = r * Math.cos(theta);
+            let y = r * Math.sin(theta);
+            return { x: x, y: y };
+        }
+
+        // Función para convertir coordenadas rectangulares a polares
+        function rectangularToPolar(x, y) {
+            let r = Math.sqrt(x * x + y * y);
+            let theta = Math.atan2(y, x);
+            return { r: r, theta: theta };
+        }
+
+        // Manejar la conversión de polares a rectangulares
+        document.getElementById('polarToRectForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let r = parseFloat(document.getElementById('r').value);
+            let theta = parseFloat(document.getElementById('theta').value);
+            let rectCoords = polarToRectangular(r, theta);
+            document.getElementById('polarToRectResult').textContent = `Coordenadas rectangulares: x = ${rectCoords.x}, y = ${rectCoords.y}`;
+        });
+
+        // Manejar la conversión de rectangulares a polares
+        document.getElementById('rectToPolarForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let x = parseFloat(document.getElementById('x').value);
+            let y = parseFloat(document.getElementById('y').value);
+            let polarCoords = rectangularToPolar(x, y);
+            document.getElementById('rectToPolarResult').textContent = `Coordenadas polares: r = ${polarCoords.r}, theta = ${polarCoords.theta}`;
+        });
+    </script>
+</body>
+</html>
+
